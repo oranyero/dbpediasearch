@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+	<title>Buscando en Dbpedia</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="./recursos/bootstrap.css" media="screen">
+	<link rel="stylesheet" href="./recursos/bootswatch.min.css">
+
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
+	<script>
+	
+	function buscar(){
+		
+					var textobuscado = null;
+					if($("#cajabusqueda").val().replace(' ','_')){
+						
+						textobuscado = $("#cajabusqueda").val().replace(' ','_');
+						
+					} else if($("#cajabusquedamovil").val().replace(' ','_')) {
+						
+						textobuscado = $("#cajabusquedamovil").val().replace(' ','_');
+						
+					}
+					
+					$("#textobuscado").html('Cargando ...');
+					$("#mostrarcajabusqueda").html(textobuscado);
+    
+                    $.getJSON("http://dbpedia.org/data/"+textobuscado+".json",function(result){
+                        $.each(result["http://dbpedia.org/resource/"+textobuscado]["http://dbpedia.org/ontology/abstract"], function(index, value) {
+									$("#textobuscado").html(value.value);
+                        });
+                    });	
+					
+					$("#textobuscado").html('No se encontro contenido relacionado.');
+                   		
+		
+	}
+            //llama a la funcion buscar dentro del documento.
+			$(document).ready(function(){
+				
+				$("#buscar").on("click", function(){
+					buscar();
+ 					return false;
+					});
+					
+				$("#buscarmovil").on("click", function(){
+					buscar();
+ 					return false;
+					});
+			});
+				
+             
+        </script>
+
+</head>
+
+<body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">Busqueda en DBpedia.org</a>
+        </div>
+        <form class="navbar-form navbar-right hidden-xs">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="cajabusqueda" placeholder="Buscar algo...">
+                      </div>
+                      <button type="submit" class="btn btn-default" id="buscar">Buscar</button>
+                    </form>
+      </div>
+    </div>
+    
+    
+    <div class="container m-t-xxl">
+
+      <div class="page-header" id="banner">
+        <div class="row">
+        
+         <form class="visible-xs">
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="cajabusquedamovil" placeholder="Buscar algo...">
+                      </div>
+                      <button type="submit" class="btn btn-default" id="buscarmovil">Buscar</button>
+                    </form>
+        
+        <div class="jumbotron" style="margin-top: 30px;">
+  			<h1 id="mostrarcajabusqueda"></h1>
+  			<p id="textobuscado">DBpedia</p>
+		</div>
+         
+		
+		
+          </div>
+        </div>
+        
+        
+        <footer>
+        <div class="row">
+          <div class="col-lg-12" style="border-left: 2px solid #F90;">
+
+            Malive Developer
+
+          </div>
+        </div>
+
+      </footer>
+
+
+    </div>
+  
+</body>
+</html>
+
+<!-- La vida es de color naranja -->
