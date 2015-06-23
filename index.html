@@ -34,8 +34,8 @@
 					$("#textobuscado").html('Cargando ...');
 					$("#mostrarcajabusqueda").html(textobuscado);
     
-                    $.getJSON("http://dbpedia.org/data/"+textobuscado+".json",function(result){
-                        $.each(result["http://dbpedia.org/resource/"+textobuscado]["http://dbpedia.org/ontology/abstract"], function(index, value) {
+                	 	$.getJSON("http://dbpedia.org/data/"+textobuscado+".json",function(result){
+                        	$.each(result["http://dbpedia.org/resource/"+textobuscado]["http://dbpedia.org/ontology/abstract"], function(index, value) {
 									$("#textobuscado").html(value.value);
                         });
                     });	
